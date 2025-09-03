@@ -1,0 +1,200 @@
+/* BackwardsAPI - Text Viewer Styles (matches explorer aesthetics) */
+
+/* Theme variables */
+:root {
+  --bg: #0b0f14;
+  --bg-elev: #0f141b;
+  --text: #e6edf3;
+  --muted: #9aa7b2;
+
+  --card-bg: rgba(255, 255, 255, 0.04);
+  --card-bg-hover: rgba(255, 255, 255, 0.06);
+  --card-border: rgba(255, 255, 255, 0.08);
+
+  --accent: #3b82f6;
+  --accent-muted: color-mix(in oklab, var(--accent), transparent 65%);
+  --ring: color-mix(in oklab, var(--accent), white 10%);
+
+  --shadow-1: 0 1px 0 rgba(255, 255, 255, 0.03);
+  --shadow-2: 0 8px 24px rgba(0, 0, 0, 0.35);
+
+  --radius: 12px;
+  --maxw: 100vw;
+  --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #f7f8fa;
+    --bg-elev: #ffffff;
+    --text: #0d1117;
+    --muted: #59636e;
+
+    --card-bg: rgba(0, 0, 0, 0.03);
+    --card-bg-hover: rgba(0, 0, 0, 0.05);
+    --card-border: rgba(0, 0, 0, 0.08);
+
+    --shadow-1: 0 1px 0 rgba(0, 0, 0, 0.04);
+    --shadow-2: 0 8px 24px rgba(0, 0, 0, 0.12);
+  }
+}
+
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+  /* prevent page scroll; we'll scroll the code block instead */
+}
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  color: var(--text);
+  background: var(--bg);
+  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.45;
+  height: 95vh;
+  /* better on mobile */
+  display: grid;
+  /* layout: back link + code area */
+  grid-template-rows: auto minmax(0, 1fr);
+  /* allow the code area to shrink within 100vh */
+}
+
+/* Back link container */
+.controls {
+  max-width: var(--maxw);
+  margin: 16px 0;
+  padding: 0 24px;
+}
+
+/* Back link styled like a card (same feel as .file.dir) */
+.controls>a {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: var(--radius);
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  box-shadow: var(--shadow-1), var(--shadow-2);
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 550;
+  letter-spacing: 0.2px;
+  user-select: none;
+  border-left: 4px solid var(--accent-muted);
+  padding-left: 12px;
+  transition:
+    background 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 120ms ease,
+    filter 160ms ease;
+}
+
+.controls>a:hover {
+  background: var(--card-bg-hover);
+  border-color: color-mix(in oklab, var(--card-border), var(--accent) 20%);
+  border-left-color: var(--accent);
+  transform: translateY(-1px);
+  filter: saturate(1.05);
+}
+
+.controls>a:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+/* Code area container */
+.content {
+  max-width: var(--maxw);
+  width: 75%;
+  margin: 12px auto 0;
+  /* remove bottom margin to avoid cut-off */
+  padding: 0 24px;
+  min-height: 0;
+  /* allow shrinking */
+  min-width: 0;
+  /* allow width to shrink in grid */
+  display: grid;
+  /* lets children (pre) fill and scroll */
+  grid-template-rows: minmax(0, 1fr);
+  /* ensure child can be 0..available */
+}
+
+/* Code block (plays nice with highlight.js) */
+pre {
+  margin: 0;
+  padding: 0;
+  overflow: auto;
+  /* scroll here, not the page */
+  border-radius: var(--radius);
+  border: 1px solid var(--card-border);
+  box-shadow: var(--shadow-1), var(--shadow-2);
+  background: transparent;
+  max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  max-height: none;
+  /* remove max cap */
+  height: 100%;
+  /* fill available space from the grid */
+  overscroll-behavior: contain;
+  /* avoid rubber-banding affecting the page */
+  min-width: 0;
+  /* prevent horizontal overflow from expanding the grid */
+}
+
+/* Highlight.js will add .hljs to code; we keep theme colors and only set layout */
+pre>code {
+  display: block;
+  background: var(--bg-elev);
+  /* consistent container */
+  padding: 16px 20px;
+  font: 13px/1.6 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  tab-size: 2;
+  -moz-tab-size: 2;
+  border-radius: inherit;
+  min-height: 100%;
+  min-width: 0;
+  /* keep long lines from forcing page width */
+  /* stretch background to full visible area */
+}
+
+/* Scrollbars */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in oklab, var(--accent), transparent 50%) transparent;
+}
+
+*::-webkit-scrollbar {
+  height: 10px;
+  width: 10px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: color-mix(in oklab, var(--accent), transparent 50%);
+  border-radius: 999px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Small screens */
+@media (max-width: 480px) {
+  body>div:first-of-type {
+    padding: 0 16px;
+  }
+
+  body>div:nth-of-type(2) {
+    padding: 0 16px;
+  }
+
+  pre>code {
+    padding: 12px 14px;
+  }
+}

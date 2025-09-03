@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link rel="stylesheet"
+		href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build/styles/tokyo-night-dark.css">
+	<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build/highlight.min.js"></script>
+
+	<script>hljs.highlightAll();</script>
+
+	<style>
+		* {
+            padding: 0;
+            margin: 0;
+        }
+
+        .center {
+            width: 100%;
+        }
+
+        .center>* {
+            margin: 0 auto;
+        }
+
+        pre {
+            width: 95%;
+            border-radius: 1em;
+            overflow: hidden;
+        }
+
+        {css}
+	</style>
+
+	<title>{title}</title>
+</head>
+
+<body>
+    <div class="controls">
+        <a href="/{back}">📁 Back</a>
+    </div>
+	<div class="content">
+		<div class="center">
+            <pre><code class="language-{language}">{content}</code></pre>
+        </div>
+	</div>
+</body>
+
+</html>

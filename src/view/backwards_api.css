@@ -1,0 +1,319 @@
+/* BackwardsAPI - File Explorer and Text Viewer Styles */
+
+/* Theme variables */
+:root {
+  --bg: #0b0f14;
+  --bg-elev: #0f141b;
+  --text: #e6edf3;
+  --muted: #9aa7b2;
+
+  --card-bg: rgba(255, 255, 255, 0.04);
+  --card-bg-hover: rgba(255, 255, 255, 0.06);
+  --card-border: rgba(255, 255, 255, 0.08);
+
+  --accent: #3b82f6;
+  --accent-muted: color-mix(in oklab, var(--accent), transparent 65%);
+  --ring: color-mix(in oklab, var(--accent), white 10%);
+
+  --shadow-1: 0 1px 0 rgba(255, 255, 255, 0.03);
+  --shadow-2: 0 8px 24px rgba(0, 0, 0, 0.35);
+
+  --radius: 12px;
+  --grid-gap: 14px;
+  --card-pad: 16px 18px;
+  --maxw: 1200px;
+  --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+
+  /* Download button tones */
+  --btn-bg: color-mix(in oklab, var(--accent), transparent 85%);
+  --btn-bg-hover: color-mix(in oklab, var(--accent), transparent 75%);
+  --btn-border: color-mix(in oklab, var(--accent), white 10%);
+  --btn-text: var(--text);
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #f7f8fa;
+    --bg-elev: #ffffff;
+    --text: #0d1117;
+    --muted: #59636e;
+
+    --card-bg: rgba(0, 0, 0, 0.03);
+    --card-bg-hover: rgba(0, 0, 0, 0.05);
+    --card-border: rgba(0, 0, 0, 0.08);
+
+    --shadow-1: 0 1px 0 rgba(0, 0, 0, 0.04);
+    --shadow-2: 0 8px 24px rgba(0, 0, 0, 0.12);
+  }
+}
+
+/* Page base */
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  color: var(--text);
+  background:
+    radial-gradient(1200px 600px at 20% -10%, color-mix(in oklab, var(--accent), transparent 85%), transparent 60%),
+    radial-gradient(1000px 500px at 120% 10%, color-mix(in oklab, #8b5cf6, transparent 85%), transparent 60%),
+    var(--bg);
+  background-attachment: fixed;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3 {
+  margin: 24px auto 6px;
+  padding: 0 24px;
+  max-width: var(--maxw);
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+h1 {
+  font-size: 1.6rem;
+}
+
+h2 {
+  font-size: 1.25rem;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+/* Grid container for explorer */
+.file-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--grid-gap);
+  padding: 24px;
+  max-width: var(--maxw);
+  margin: 12px auto 32px;
+}
+
+/* Card wrapper for each entry (file/dir) */
+.file {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-radius: var(--radius);
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  box-shadow: var(--shadow-1), var(--shadow-2);
+  color: var(--text);
+  text-decoration: none;
+  font-size: 0.98rem;
+  font-weight: 550;
+  letter-spacing: 0.2px;
+  user-select: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transform: translateZ(0);
+  transition:
+    transform 120ms ease,
+    background 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    filter 160ms ease;
+  border-left: 4px solid var(--accent-muted);
+  padding-right: 14px;
+}
+
+/* Hover/active states */
+.file:hover {
+  background: var(--card-bg-hover);
+  border-color: color-mix(in oklab, var(--card-border), var(--accent) 20%);
+  border-left-color: var(--accent);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.08), 0 14px 28px rgba(0, 0, 0, 0.35);
+  filter: saturate(1.05);
+}
+
+.file:active {
+  transform: translateY(0);
+  filter: saturate(1);
+}
+
+.file:focus-within {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+/* Primary link (opens file/dir) */
+.file>a.open {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: inherit;
+  text-decoration: none;
+  padding: var(--card-pad);
+  padding-left: 12px;
+}
+
+.file>a.open>span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.file>a.open>span::first-letter {
+  font-size: 1.15em;
+}
+
+/* Download action (only shown for real files) */
+.file>a.download {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-width: 2.25rem;
+  height: 2rem;
+  padding: 0 10px;
+  border-radius: 8px;
+  border: 1px solid var(--btn-border);
+  background: var(--btn-bg);
+  color: var(--btn-text);
+  text-decoration: none;
+  font-size: 0.95rem;
+  filter: saturate(1);
+  transition:
+    background 160ms ease,
+    border-color 160ms ease,
+    transform 120ms ease,
+    filter 160ms ease;
+}
+
+.file>a.download:hover {
+  background: var(--btn-bg-hover);
+  transform: translateY(-1px);
+}
+
+.file>a.download:active {
+  transform: translateY(0);
+}
+
+.file>a.download:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+/* Directory variant (no download) */
+.file.dir {
+  padding-right: 16px;
+}
+
+/* Scrollbars */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in oklab, var(--accent), transparent 50%) transparent;
+}
+
+*::-webkit-scrollbar {
+  height: 10px;
+  width: 10px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: color-mix(in oklab, var(--accent), transparent 50%);
+  border-radius: 999px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Small screens */
+@media (max-width: 480px) {
+  :root {
+    --grid-gap: 10px;
+  }
+
+  .file-grid {
+    padding: 16px;
+  }
+
+  .file {
+    font-size: 0.96rem;
+    padding: 12px 14px;
+  }
+
+  .file>a.download {
+    min-width: 2rem;
+    height: 1.9rem;
+    padding: 0 8px;
+  }
+}
+
+/* --- Text viewer (sendTextHTML) --- */
+.text-view {
+  max-width: var(--maxw);
+  margin: 16px auto 32px;
+  padding: 16px 20px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-1), var(--shadow-2);
+}
+
+.text-view__header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.text-view__title {
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.text-view__actions {
+  display: inline-flex;
+  gap: 8px;
+}
+
+.text-view__actions a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 2rem;
+  padding: 0 10px;
+  border-radius: 8px;
+  border: 1px solid var(--btn-border);
+  background: var(--btn-bg);
+  color: var(--btn-text);
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+.text-view__actions a:hover {
+  background: var(--btn-bg-hover);
+}
+
+pre.code {
+  margin: 0;
+  padding: 14px 16px;
+  overflow: auto;
+  background: var(--bg-elev);
+  border-radius: 10px;
+  border: 1px solid var(--card-border);
+  font: 13px/1.55 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  color: var(--text);
+  tab-size: 2;
+  -moz-tab-size: 2;
+}
+
+pre.code code {
+  color: inherit;
+  font: inherit;
+}
