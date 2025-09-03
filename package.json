@@ -4,6 +4,7 @@
   "description": "Basically my API Explorer from my HTTP Proxy, but for nginx (i gave up on my proxy)",
   "main": "./src/index.ts",
   "scripts": {
+    "build": "tsc --project tsconfig.json --outDir dist src",
     "dev": "nodemon ./src/index.ts"
   },
   "keywords": [],
