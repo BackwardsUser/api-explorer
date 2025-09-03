@@ -1,6 +1,6 @@
 import { join } from "node:path";
 
-export const PORT = 8080;
+export const PORT = 2989;
 
 export const contentDirName = "content";
 export const contentDir = join(__dirname, "..", contentDirName);
