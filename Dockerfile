@@ -1,20 +1,25 @@
-FROM node:14
-
-WORKDIR /usr/src/app
+FROM node:24-alpine AS build
+WORKDIR /app
 
 COPY package*.json ./
+RUN npm ci
 
-RUN npm install
+COPY tsconfig.json ./
+COPY src ./src
 
-COPY . .
-
-# Ensure TypeScript is installed globally (optional, if not in devDependencies)
-RUN npm install -g typescript
-
-# Build the TypeScript code
 RUN npm run build
+
+FROM node:24-alpine AS runner
+WORKDIR /app
+ENV NODE_ENV=production
+
+COPY package*.json ./
+RUN npm ci --omit=dev
+
+COPY --from=build /app/dist ./dist
 
 EXPOSE 2989
 
+CMD ["node", "-v"]
 # Run the compiled JavaScript output
-CMD ["node", "dist/index.js"]
+# CMD ["npm", "run", "start"]
