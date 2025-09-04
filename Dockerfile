@@ -1,19 +1,17 @@
 FROM node:14
 
-# Set the working directory
 WORKDIR /usr/src/app
 
-# Copy package.json and package-lock.json
 COPY package*.json ./
 
-# Install dependencies
 RUN npm install
 
-# Copy the rest of the application files
 COPY . .
 
-# Expose the port the app runs on
+# Build the TypeScript code
+RUN npm run build
+
 EXPOSE 2989
 
-# Command to run the application
-CMD ["node", "src/index.ts"]
+# Run the compiled JavaScript output
+CMD ["node", "dist/index.js"]
