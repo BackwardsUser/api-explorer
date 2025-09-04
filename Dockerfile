@@ -8,6 +8,9 @@ RUN npm install
 
 COPY . .
 
+# Ensure TypeScript is installed globally (optional, if not in devDependencies)
+RUN npm install -g typescript
+
 # Build the TypeScript code
 RUN npm run build
 
