@@ -20,6 +20,4 @@ COPY --from=build /app/dist ./dist
 
 EXPOSE 2989
 
-CMD ["node", "-v"]
-# Run the compiled JavaScript output
-# CMD ["npm", "run", "start"]
+CMD ["npm", "run", "start"]
