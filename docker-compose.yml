@@ -6,7 +6,7 @@ services:
     ports:
       - "2989:2989"
     volumes:
-      - ./content:/app/content
+      - /srv/api-explorer/content:/app/content
     environment:
       - NODE_ENV=production
     restart: unless-stopped
